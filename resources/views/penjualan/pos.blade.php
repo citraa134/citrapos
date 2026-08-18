@@ -3,6 +3,116 @@
 @section('title', 'POS')
 
 @section('content')
+<style>
+    .page-bg-full {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(135deg, #eef2ff 0%, #fdf2f8 100%);
+        z-index: -1;
+    }
+
+    .content-wrapper-soft {
+        padding: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .content-wrapper-soft h4 {
+        color: #4c1d95;
+        font-weight: 700;
+    }
+
+    .content-wrapper-soft .card {
+        border: 1px solid #f1eafe;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.08);
+    }
+
+    .content-wrapper-soft .form-control,
+    .content-wrapper-soft .form-select {
+        border: 1.5px solid #e0d7f5;
+        border-radius: 10px;
+    }
+
+    .content-wrapper-soft .form-control:focus,
+    .content-wrapper-soft .form-select:focus {
+        border-color: #a78bfa;
+        box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.15);
+    }
+
+    .content-wrapper-soft .btn-outline-primary {
+        border-radius: 10px;
+        border-color: #ddd6fe;
+        color: #6d28d9;
+    }
+
+    .content-wrapper-soft .btn-outline-primary:hover {
+        background: #f3e8ff;
+        border-color: #a78bfa;
+        color: #4c1d95;
+    }
+
+    .content-wrapper-soft .btn-primary {
+        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+        border: none;
+        border-radius: 10px;
+    }
+
+    .content-wrapper-soft .btn-primary:hover {
+        opacity: 0.9;
+    }
+
+    .content-wrapper-soft .btn-success {
+        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .content-wrapper-soft .btn-success:hover {
+        opacity: 0.9;
+    }
+
+    .content-wrapper-soft .btn-danger {
+        background: #f43f5e;
+        border: none;
+        border-radius: 8px;
+    }
+
+    .content-wrapper-soft .btn-outline-danger {
+        border-radius: 10px;
+        border-color: #fda4af;
+        color: #e11d48;
+    }
+
+    .content-wrapper-soft .btn-outline-danger:hover {
+        background: #fff1f2;
+        border-color: #fb7185;
+        color: #be123c;
+    }
+
+    .content-wrapper-soft .table {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .content-wrapper-soft thead {
+        background: #f5f3ff;
+        color: #4c1d95;
+    }
+
+    .content-wrapper-soft .card-footer {
+        background: #faf9ff;
+        border-top: 1px solid #f1eafe;
+    }
+</style>
+
+<div class="page-bg-full"></div>
+
+<div class="content-wrapper-soft">
 
 @if (session('errors'))
           <div class="alert alert-danger">
@@ -149,7 +259,6 @@
 </div>
 
 </div>
+
+</div>
 @endsection
-
-        
-

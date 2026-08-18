@@ -273,73 +273,72 @@
 
 <div class="container mt-4">
 
-    @if (session('errors'))
-        <div class="alert alert-danger">
-            {{ session('errors') }}
-        </div>
-    @endif
+  @if (session('errors'))
+    <div class="alert alert-danger">
+        {{ session('errors') }}
+     </div>
+@endif
 
-    <div class="page-header">
-        <h1>Halaman Penjualan</h1>
-        <a href="{{ route('penjualan.create') }}" class="btn btn-primary">Create</a>
+  <div class="page-header">
+    <h1>Halaman Penjualan</h1>
+      <a href="{{ route('penjualan.create') }}" class="btn btn-primary">Create</a>
+  </div>
+
+  <form action="{{ route('penjualan.index') }}" method="GET" class="content-card">
+    <div class="input-group">
+       <input
+          type="text"
+          name="search"
+          value="{{ request()->search }}"
+          class="form-control"
+          placeholder="Search penjualan" >
+        <button class="btn btn-outline-secondary" type="submit">
+           Search
+        </button>
     </div>
-
-    <form action="{{ route('penjualan.index') }}" method="GET" class="content-card">
-        <div class="input-group">
-            <input
-                type="text"
-                name="search"
-                value="{{ request()->search }}"
-                class="form-control"
-                placeholder="Search penjualan"
-            >
-            <button class="btn btn-outline-secondary" type="submit">
-                Search
-            </button>
-        </div>
     </form>
 
-    <div class="content-card">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tanggal Transaksi</th>
-                    <th scope="col">Kasir</th>
-                    <th scope="col">Total Pembayaran</th>
-                    <th scope="col">Metode Pembayaran</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($sales as $sale )
-                <tr>
-                    <th scope="row">{{$sales->firstItem() + $loop->index}}</th>
-                    <td>{{$sale->created_at->translatedFormat('d-m-Y H:i:s')}}</td>
-                    <td>{{$sale->user->name}}</td>
-                    <td>Rp.{{number_format($sale->total_pembayaran)}}</td>
-                    <td>{{$sale->metode_pembayaran}}</td>
-                    <td>
-                        <span class="status-badge {{ $sale->status == 'lunas' ? 'status-lunas' : ($sale->status == 'pending' ? 'status-pending' : 'status-default') }}">
-                            {{$sale->status}}
-                        </span>
-                    </td>
-                    <td class="d-flex gap-1">
-                        <a href="" class="btn btn-sm btn-info">Detail</a>
-                        @can('view', $sale)
-                        <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-sm btn-warning">Edit</a>
-                        @endcan
-                        @can('delete', $sale)
-                        <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus penjualan ini?')">
-                                Hapus
-                            </button>
-                        </form>
-                        @endcan
-                    </td>
+  <div class="content-card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tanggal Transaksi</th>
+          <th scope="col">Kasir</th>
+          <th scope="col">Total Pembayaran</th>
+          <th scope="col">Metode Pembayaran</th>
+          <th scope="col">Status</th>
+          <th scope="col">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+    @forelse ($sales as $sale )
+        <tr>
+          <th scope="row">{{$sales->firstItem() + $loop->index}}</th>
+          <td>{{$sale->created_at->translatedFormat('d-m-Y H:i:s')}}</td>
+          <td>{{$sale->user->name}}</td>
+          <td>Rp.{{number_format($sale->total_pembayaran)}}</td>
+          <td>{{$sale->metode_pembayaran}}</td>
+          <td>
+            <span class="status-badge {{ $sale->status == 'lunas' ? 'status-lunas' : ($sale->status == 'pending' ? 'status-pending' : 'status-default') }}">
+              {{$sale->status}}
+            </span>
+              </td>
+              <td class="d-flex gap-1">
+                <a href="" class="btn btn-sm btn-info" onclick="event.preventDefault(); showDetailPenjualan('{{ $sale->status }}')">Detail</a>
+                @can('view', $sale)
+                <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-sm btn-warning">Edit</a>
+                @endcan
+                @can('delete', $sale)
+        <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus penjualan ini?')">
+              Hapus
+          </button>
+        </form>
+          @endcan
+              </td>
                 </tr>
                 @empty
                 <tr>
@@ -355,4 +354,21 @@
     </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+function showDetailPenjualan(status) {
+    const s = status.toLowerCase();
+    const isSelesai = s === 'lunas' || s === 'completed';
+
+    Swal.fire({
+        icon: isSelesai ? 'success' : 'warning',
+        title: isSelesai
+            ? 'Transaksi telah berhasil'
+            : 'Transaksi belum selesai (' + status + ')',
+        confirmButtonText: 'Tutup'
+    });
+}
+</script>
+
 @endsection

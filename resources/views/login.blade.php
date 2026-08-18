@@ -128,7 +128,7 @@
           <path d="M9 21V13H15V21" stroke="#3D3A56" stroke-width="1.8" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h5>Login POS</h5>
+      <h5>LOGIN POS</h5>
     </div>
     <div class="card-body">
 

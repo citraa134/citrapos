@@ -266,7 +266,7 @@
 <div class="container mt-4">
 
   <div class="page-header">
-    <h1>Halaman Produk</h1>
+    <h1>Daftar Produk</h1>
     @can('create', App\Models\Produk::class)
       <a href="{{ route('produk.create') }}" class="btn btn-primary">Create</a>
     @endcan
