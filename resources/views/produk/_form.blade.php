@@ -174,6 +174,25 @@
                 </div>
               @enderror
         </div>
+        
+        <div class="field-group">
+    <label>Jenis Produk</label><br>
+    <select name="jenis_id"
+            class="form-control @error('jenis_id') is-invalid @enderror">
+        <option value="">-- Pilih Jenis --</option>
+        @foreach ($jenis as $item)
+            <option value="{{ $item->id }}"
+                @selected(old('jenis_id', $produk->jenis_id ?? '') == $item->id)>
+                {{ $item->nama }}
+            </option>
+        @endforeach
+    </select>
+    @error('jenis_id')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
 
         <div class="field-group">
             <label>Harga Beli</label><br>

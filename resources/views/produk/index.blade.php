@@ -295,13 +295,14 @@
           <th scope="col">User</th>
           <th scope="col">Foto</th>
           <th scope="col">Nama</th>
+          <th scope="col">Jenis</th>
           <th scope="col">Harga Beli</th>
           <th scope="col">Harga Jual</th>
           <th scope="col">Stok</th>
           <th scope="col">Aksi</th>
         </tr>
       </thead>
-      <tbody>
+        <tbody>
         @forelse ($products as $product)
         <tr>
           <th scope="row">{{ $products->firstItem() + $loop->index }}</th>
@@ -312,6 +313,7 @@
                       class="img-thumbnail">
           </td>
           <td>{{ $product->nama }}</td>
+          <td>{{ $product->jenis->nama ?? '-' }}</td>
           <td>{{ $product->harga_beli }}</td>
           <td>{{ $product->harga_jual}}</td>
           <td>
@@ -336,7 +338,7 @@
         </tr>
         @empty
             <tr>
-                <td colspan="8" class="empty-state">Data tidak tersedia.</td>
+                <td colspan="9" class="empty-state">Data tidak tersedia.</td>
             </tr>
         @endforelse
       </tbody>
