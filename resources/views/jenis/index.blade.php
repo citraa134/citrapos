@@ -3,142 +3,279 @@
 @section('title', 'Jenis Produk')
 
 @section('content')
+
 <style>
-    .page-bg-full {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: linear-gradient(135deg, #eef2ff 0%, #fdf2f8 100%);
-        z-index: -1;
-    }
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 
-    .content-wrapper-soft {
-        padding: 1rem;
-        position: relative;
-        z-index: 1;
-    }
+  html {
+    background: #F1F0FA;
+  }
 
-    .content-wrapper-soft h4 {
-        color: #4c1d95;
-        font-weight: 700;
-    }
+  body {
+    min-height: 100vh !important;
+    background: linear-gradient(180deg, #F7F6FC 0%, #F1F0FA 100%);
+    color: #3D3A56;
+    display: flow-root;
+  }
 
-    .card-soft {
-        background: #ffffff;
-        border-radius: 18px;
-        padding: 1.5rem;
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.08);
-        border: 1px solid #f1eafe;
-    }
+  .container {
+    display: flow-root;
+  }
 
-    .table-soft thead {
-        background: #f5f3ff;
-        color: #4c1d95;
-    }
+  main, .flex-shrink-0, .min-vh-100 {
+    min-height: auto !important;
+  }
 
-    .table-soft {
-        border-radius: 12px;
-        overflow: hidden;
-    }
+  footer, .footer {
+    background: #F1F0FA !important;
+    border-top: 1px solid #ECEAF7 !important;
+    color: #6E6B8A !important;
+  }
 
-    .btn-soft-success {
-        display: inline-block;
-        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
-        border: none;
-        color: #fff;
-        font-weight: 600;
-        border-radius: 12px;
-        padding: 8px 20px;
-        text-decoration: none;
-        box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
-        transition: all 0.15s ease;
-    }
+  /* ---- Navbar ---- */
+  .navbar {
+    background-color: #FFFFFF !important;
+    border-bottom: 1px solid #ECEAF7;
+    box-shadow: 0 1px 2px rgba(124, 108, 219, 0.04);
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
 
-    .btn-soft-success:hover {
-        color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(139, 92, 246, 0.45);
-    }
+  .navbar .navbar-brand,
+  .navbar-brand {
+    color: #3D3A56 !important;
+    font-weight: 700;
+  }
 
-    .btn-soft-edit {
-        display: inline-block;
-        background: #eef2ff;
-        border: 1px solid #c7d2fe;
-        color: #4338ca;
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 5px 14px;
-        text-decoration: none;
-        font-size: 0.85rem;
-        transition: all 0.15s ease;
-    }
+  .navbar .nav-link {
+    color: #6E6B8A !important;
+    font-weight: 500;
+  }
 
-    .btn-soft-edit:hover {
-        background: #e0e7ff;
-        color: #3730a3;
-    }
+  .navbar .nav-link:hover,
+  .navbar .nav-link.active {
+    color: #7C6FE8 !important;
+  }
 
-    .btn-soft-delete {
-        background: #fff1f2;
-        border: 1px solid #fda4af;
-        color: #be123c;
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 5px 14px;
-        font-size: 0.85rem;
-        transition: all 0.15s ease;
-    }
+  .navbar .btn-danger {
+    background-color: #E3A9B4 !important;
+    border-color: #E3A9B4 !important;
+    color: #4A2530 !important;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.2;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+  }
 
-    .btn-soft-delete:hover {
-        background: #ffe4e6;
-        color: #9f1239;
-    }
+  .navbar .btn-danger:hover {
+    background-color: #D992A0 !important;
+    border-color: #D992A0 !important;
+  }
+
+  /* ---- Headings ---- */
+  h1 {
+    color: #3D3A56;
+    font-weight: 700;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+
+  /* ---- Card wrapper ---- */
+  .content-card {
+    background-color: #FFFFFF;
+    border: 1px solid #ECEAF7;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(124, 108, 219, 0.06);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* ---- Create button ---- */
+  .btn-primary {
+    background-color: #A9B2F0 !important;
+    border-color: #A9B2F0 !important;
+    color: #2E2C42 !important;
+    font-weight: 600;
+    border-radius: 10px;
+  }
+
+  .btn-primary:hover {
+    background-color: #939EEC !important;
+    border-color: #939EEC !important;
+  }
+
+  /* ---- Search form ---- */
+  .form-control {
+    background-color: #FAF9FD;
+    border: 1px solid #E9E7F4;
+    color: #3D3A56;
+  }
+
+  .form-control::placeholder {
+    color: #B7B4CC;
+  }
+
+  .form-control:focus {
+    background-color: #FFFFFF;
+    border-color: #B7BEF2;
+    box-shadow: 0 0 0 3px rgba(140, 152, 240, 0.15);
+  }
+
+  .btn-outline-secondary {
+    color: #6E6B8A;
+    border-color: #E9E7F4;
+    font-weight: 500;
+  }
+
+  .btn-outline-secondary:hover {
+    background-color: #EFEDFA;
+    border-color: #D9D5F4;
+    color: #3D3A56;
+  }
+
+  /* ---- Table ---- */
+  .table {
+    background-color: #FFFFFF;
+    border: 1px solid #ECEAF7;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .table thead th {
+    background-color: #FBFAFE;
+    color: #6E6B8A;
+    border-bottom: 1px solid #ECEAF7 !important;
+    font-weight: 600;
+  }
+
+  .table tbody tr:hover {
+    background-color: #FBFAFE;
+  }
+
+  .table td, .table th {
+    border-color: #F1F0FA;
+    vertical-align: middle;
+  }
+
+  .table a {
+    color: #7C6FE8;
+    text-decoration: none;
+  }
+
+  .table a:hover {
+    color: #5F52D6;
+    text-decoration: underline;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2rem 0;
+    color: #B7B4CC;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ---- Action buttons ---- */
+  .btn-warning {
+    background-color: #F0D9A9 !important;
+    border-color: #F0D9A9 !important;
+    color: #5C4A1F !important;
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  .btn-warning:hover {
+    background-color: #E8C888 !important;
+    border-color: #E8C888 !important;
+  }
+
+  .btn-danger {
+    background-color: #E3A9B4 !important;
+    border-color: #E3A9B4 !important;
+    color: #4A2530 !important;
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  .btn-danger:hover {
+    background-color: #D992A0 !important;
+    border-color: #D992A0 !important;
+  }
 </style>
 
-<div class="page-bg-full"></div>
+@include('layouts.navbar')
 
-<div class="content-wrapper-soft">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Jenis Produk</h4>
-        <a href="{{ route('jenis.create') }}" class="btn-soft-success">Tambah Jenis</a>
+<div class="container mt-4">
+
+  <div class="page-header">
+    <h1>Jenis Produk</h1>
+    <a href="{{ route('jenis.create') }}" class="btn btn-primary">Tambah Jenis</a>
+  </div>
+
+  <form action="{{ route('jenis.index') }}" method="GET" class="content-card">
+    <div class="input-group">
+      <input
+          type="text"
+          name="search"
+          value="{{ $search ?? '' }}"
+          class="form-control"
+          placeholder="Search nama jenis"
+      >
+      <button class="btn btn-outline-secondary" type="submit">
+        Search
+      </button>
     </div>
+  </form>
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+  <div class="content-card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Nama Jenis</th>
+          <th scope="col" style="width: 180px;">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        @forelse ($jenis as $item)
+          <tr>
+            <td>{{ $item->nama }}</td>
+            <td class="d-flex gap-1">
+              <a href="{{ route('jenis.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+              <form method="POST" action="{{ route('jenis.destroy', $item->id) }}"
+                    class="d-inline"
+                    onsubmit="return confirm('Yakin ingin menghapus jenis ini?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </form>
+            </td>
+          </tr>
+        @empty
+          <tr>
+            <td colspan="2" class="empty-state">Data tidak tersedia.</td>
+          </tr>
+        @endforelse
+      </tbody>
+    </table>
+  </div>
 
-    <div class="card-soft">
-        <table class="table table-bordered table-soft mb-0">
-            <thead>
-                <tr>
-                    <th>Nama Jenis</th>
-                    <th style="width: 180px;">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($jenis as $item)
-                    <tr>
-                        <td>{{ $item->nama }}</td>
-                        <td>
-                            <a href="{{ route('jenis.edit', $item->id) }}" class="btn-soft-edit">Edit</a>
-                            <form method="POST" action="{{ route('jenis.destroy', $item->id) }}"
-                                  class="d-inline"
-                                  onsubmit="return confirm('Yakin ingin menghapus jenis ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-soft-delete">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="2" class="text-center text-muted">Belum ada data jenis</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
 </div>
+
 @endsection
