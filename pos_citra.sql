@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               8.0.30 - MySQL Community Server - GPL
+-- Server version:               8.4.3 - MySQL Community Server - GPL
 -- Server OS:                    Win64
--- HeidiSQL Version:             12.1.0.6537
+-- HeidiSQL Version:             12.8.0.6908
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,8 +21,8 @@ USE `pos_citra`;
 
 -- Dumping structure for table pos_citra.cache
 CREATE TABLE IF NOT EXISTS `cache` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS `cache` (
 
 -- Dumping structure for table pos_citra.cache_locks
 CREATE TABLE IF NOT EXISTS `cache_locks` (
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -42,11 +42,11 @@ CREATE TABLE IF NOT EXISTS `cache_locks` (
 -- Dumping structure for table pos_citra.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -69,9 +69,9 @@ CREATE TABLE IF NOT EXISTS `item_penjualan` (
   KEY `item_penjualan_produk_id_foreign` (`produk_id`),
   CONSTRAINT `item_penjualan_penjualan_id_foreign` FOREIGN KEY (`penjualan_id`) REFERENCES `penjualan` (`id`),
   CONSTRAINT `item_penjualan_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.item_penjualan: ~0 rows (approximately)
+-- Dumping data for table pos_citra.item_penjualan: ~3 rows (approximately)
 INSERT INTO `item_penjualan` (`id`, `penjualan_id`, `produk_id`, `kuantitas`, `harga_satuan`, `subtotal`, `created_at`, `updated_at`) VALUES
 	(1, 1, 9, 1, 65000, 65000, '2026-09-01 23:28:43', '2026-09-01 23:28:43'),
 	(2, 1, 6, 1, 110000, 110000, '2026-09-01 23:28:46', '2026-09-01 23:28:46'),
@@ -80,13 +80,13 @@ INSERT INTO `item_penjualan` (`id`, `penjualan_id`, `produk_id`, `kuantitas`, `h
 -- Dumping structure for table pos_citra.jenis
 CREATE TABLE IF NOT EXISTS `jenis` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.jenis: ~1 rows (approximately)
+-- Dumping data for table pos_citra.jenis: ~3 rows (approximately)
 INSERT INTO `jenis` (`id`, `nama`, `created_at`, `updated_at`) VALUES
 	(4, 'atasan', '2026-09-01 22:53:35', '2026-09-01 22:59:47'),
 	(5, 'one set', '2026-09-01 22:53:51', '2026-09-01 22:53:51'),
@@ -95,8 +95,8 @@ INSERT INTO `jenis` (`id`, `nama`, `created_at`, `updated_at`) VALUES
 -- Dumping structure for table pos_citra.jobs
 CREATE TABLE IF NOT EXISTS `jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `attempts` tinyint unsigned NOT NULL,
   `reserved_at` int unsigned DEFAULT NULL,
   `available_at` int unsigned NOT NULL,
@@ -109,13 +109,13 @@ CREATE TABLE IF NOT EXISTS `jobs` (
 
 -- Dumping structure for table pos_citra.job_batches
 CREATE TABLE IF NOT EXISTS `job_batches` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_jobs` int NOT NULL,
   `pending_jobs` int NOT NULL,
   `failed_jobs` int NOT NULL,
-  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `options` mediumtext COLLATE utf8mb4_unicode_ci,
+  `failed_job_ids` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `options` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
   `finished_at` int DEFAULT NULL,
@@ -127,12 +127,12 @@ CREATE TABLE IF NOT EXISTS `job_batches` (
 -- Dumping structure for table pos_citra.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.migrations: ~0 rows (approximately)
+-- Dumping data for table pos_citra.migrations: ~5 rows (approximately)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '0001_01_01_000000_create_roles_table', 1),
 	(2, '0001_01_01_000000_create_users_table', 1),
@@ -148,16 +148,16 @@ CREATE TABLE IF NOT EXISTS `penjualan` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
   `total_pembayaran` int NOT NULL,
-  `metode_pembayaran` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('OPEN','COMPLETED') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `metode_pembayaran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('OPEN','COMPLETED') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `penjualan_user_id_foreign` (`user_id`),
   CONSTRAINT `penjualan_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.penjualan: ~1 rows (approximately)
+-- Dumping data for table pos_citra.penjualan: ~0 rows (approximately)
 INSERT INTO `penjualan` (`id`, `user_id`, `total_pembayaran`, `metode_pembayaran`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 6, 255000, 'QRIS', 'COMPLETED', '2026-09-01 23:17:24', '2026-09-01 23:28:54');
 
@@ -166,8 +166,8 @@ CREATE TABLE IF NOT EXISTS `produk` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned NOT NULL,
   `jenis_id` bigint unsigned NOT NULL,
-  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `harga_beli` int NOT NULL,
   `harga_jual` int NOT NULL,
   `stok` int NOT NULL,
@@ -181,15 +181,15 @@ CREATE TABLE IF NOT EXISTS `produk` (
   CONSTRAINT `produk_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.produk: ~1 rows (approximately)
+-- Dumping data for table pos_citra.produk: ~10 rows (approximately)
 INSERT INTO `produk` (`id`, `user_id`, `jenis_id`, `foto`, `nama`, `harga_beli`, `harga_jual`, `stok`, `created_at`, `updated_at`) VALUES
 	(1, 6, 5, 'products/EMtqHEKbwo1gmNDWVPRhMAgtJEyMgDSi8PZBRznc.jpg', 'Navy Button-Up & Baggy Jeans', 100000, 150000, 50, '2026-09-01 23:02:43', '2026-09-01 23:24:05'),
 	(2, 6, 4, 'products/pW8QaEuzN973jmOoqUxz7AfKh2mkJYHKbYRUY5wv.jpg', 'crochet sweater', 50000, 70000, 50, '2026-09-01 23:07:53', '2026-09-01 23:07:53'),
 	(3, 6, 5, 'products/LosmeUab2uHY38cJaauSaobkuieXSupN0FjWW4Qj.jpg', 'Blue Abaya', 70000, 90000, 60, '2026-09-01 23:09:11', '2026-09-01 23:20:40'),
-	(4, 6, 4, 'products/7A0ZQOOdJbhD0Ar4XRtwmgQZ83NawnewiblwjTrP.jpg', 'Batik', 50000, 65000, 60, '2026-09-01 23:13:39', '2026-09-01 23:13:39'),
-	(5, 6, 4, 'products/1S97jt6qfA9adjEjP3uyoBXsP7O0Yguipu0KeRZq.jpg', 'Crop top', 30000, 45000, 50, '2026-09-01 23:15:20', '2026-09-01 23:15:20'),
-	(6, 6, 6, 'products/wZuXdmq0VLUXqbeT0TvET2FgiciNbjjBlJ7wm7Fj.jpg', 'Jeans', 98000, 110000, 74, '2026-09-01 23:17:17', '2026-09-01 23:28:46'),
-	(7, 6, 6, 'products/soI7DPf1hWKimlCj6XFq2QJKV199R3dL5uz6vdXq.jpg', 'Cargo', 80000, 95000, 54, '2026-09-01 23:18:06', '2026-09-01 23:18:06'),
+	(4, 6, 4, 'products/TM6J7M39Cx3mxmw5Lax6n7iffiJX4A1w2utQ0eH9.jpg', 'Batik', 50000, 65000, 60, '2026-09-01 23:13:39', '2026-09-06 22:03:15'),
+	(5, 6, 4, 'products/qps3ISwvjfavxLQkJetQANxO8UGCOTXtVlslNdrY.png', 'Crop top', 30000, 45000, 50, '2026-09-01 23:15:20', '2026-09-06 21:56:46'),
+	(6, 6, 6, 'products/lfpJyUk0jphg55EJqTwbNeSnhgqm8whEi2Jtud8O.png', 'Jeans', 98000, 110000, 74, '2026-09-01 23:17:17', '2026-09-06 21:58:18'),
+	(7, 6, 6, 'products/eP6lHyJ1s6FABmTu5YoGtUUHak22GTCtHoR9P7vT.png', 'Cargo', 80000, 95000, 54, '2026-09-01 23:18:06', '2026-09-06 21:59:12'),
 	(8, 6, 4, 'products/QXn7t97fyiC7j68ueyswrn9HGbfZMbTgwocxBA1K.jpg', 'Sweater', 40000, 50000, 45, '2026-09-01 23:19:42', '2026-09-01 23:19:42'),
 	(9, 6, 4, 'products/msTwEh0JqDZw7tqaw6AYYOjuIR9HU8MFAb2zkb2Y.jpg', 'Polo crop', 50000, 65000, 47, '2026-09-01 23:25:44', '2026-09-01 23:28:43'),
 	(10, 6, 5, 'products/YBM0Z5cxQScs6SclNJAPTAE9D3hWOCE4LpkTZZrn.jpg', 'Long frock', 60000, 80000, 87, '2026-09-01 23:28:20', '2026-09-01 23:28:48');
@@ -197,24 +197,24 @@ INSERT INTO `produk` (`id`, `user_id`, `jenis_id`, `foto`, `nama`, `harga_beli`,
 -- Dumping structure for table pos_citra.roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.roles: ~2 rows (approximately)
+-- Dumping data for table pos_citra.roles: ~0 rows (approximately)
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(1, 'admin', '2026-09-01 19:59:59', '2026-09-01 19:59:59'),
 	(2, 'kasir', '2026-09-01 19:59:59', '2026-09-01 19:59:59');
 
 -- Dumping structure for table pos_citra.sessions
 CREATE TABLE IF NOT EXISTS `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sessions_user_id_index` (`user_id`),
@@ -223,17 +223,17 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 
 -- Dumping data for table pos_citra.sessions: ~0 rows (approximately)
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('40ECBQ5cZlMUPp6DDH2Qak9Oh2cXrKl6XcYBNtcq', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMzhzM2JjQmtwTlduOGw4bWNnQjRQdTJ6WnNMREtGU2c1emhDVllMTSI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czoyODoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL3Byb2R1ayI7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjMxOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvZGFzaGJvYXJkIjtzOjU6InJvdXRlIjtzOjk6ImRhc2hib2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1788330559);
+	('9mWiB9afxZ1gtcs2M9bX8C3Am6gdL3To73qYYOl1', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZExTTXdBa29LbTFlMElHcVFCM21ORFg5V0tkY09kc2g3TThKSDNoOSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWsiO3M6NToicm91dGUiO3M6MTI6InByb2R1ay5pbmRleCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1788757454);
 
 -- Dumping structure for table pos_citra.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `role_id` bigint unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -243,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.users: ~5 rows (approximately)
+-- Dumping data for table pos_citra.users: ~2 rows (approximately)
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 	(6, 1, 'citra', 'citra@gmail.com', NULL, '$2y$12$quwgJrU0idjQil78fmJlE.3QbB9VPZCWO1fkI1OrPDWcSlnuUuNm6', NULL, '2026-09-01 20:32:36', '2026-09-01 20:32:36'),
 	(7, 2, 'ibannn', 'ibannn@gmail.com', NULL, '$2y$12$5/ga8d7wgXZwT4d8xhHktut6V2H5BegvHEY6OIS7E.p0/4v5UBqB.', NULL, '2026-09-01 22:52:34', '2026-09-01 22:52:34');

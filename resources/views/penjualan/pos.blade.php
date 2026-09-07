@@ -114,10 +114,14 @@
 
 <div class="content-wrapper-soft">
 
-@if (session('errors'))
-          <div class="alert alert-danger">
-                {{ session('errors') }}
-          </div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
 @endif
 
 <h4 class="mb-3">
@@ -233,8 +237,8 @@
                   onsubmit="return confirm('Yakin ingin checkout?')" class="mt-2">
               @csrf
               @method('PUT')
-              <select name="payment_method" class="form-select mb-2">
-                <option value="">Pilih Pembayaran</option>
+              <select name="payment_method" class="form-select mb-2" required>
+                <option value="" disabled selected>Pilih Pembayaran</option>
                 <option value="CASH">Cash</option>
                 <option value="QRIS">QRIS</option>
               </select>
