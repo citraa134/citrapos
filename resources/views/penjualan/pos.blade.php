@@ -237,15 +237,40 @@
                   onsubmit="return confirm('Yakin ingin checkout?')" class="mt-2">
               @csrf
               @method('PUT')
-              <select name="payment_method" class="form-select mb-2" required>
-                <option value="" disabled selected>Pilih Pembayaran</option>
-                <option value="CASH">Cash</option>
-                <option value="QRIS">QRIS</option>
-              </select>
+            <select name="payment_method" id="payment_method" class="form-select mb-2" required>
+            <option value="" disabled selected>Pilih Pembayaran</option>
+            <option value="CASH">Cash</option>
+            <option value="QRIS">QRIS</option>
+            </select>
 
-              <button class="btn btn-success w-100 {{ $sale->status === 'COMPLETED' ? 'disable' : '' }}">
-                 Checkout
-              </button>
+            <div id="uang-dibayar-wrapper" class="mb-2" style="display:none;">
+                <input type="number" name="uang_dibayar" id="uang_dibayar" class="form-control"
+                    placeholder="Uang dibayar customer" min="0">
+            </div>
+
+            <button class="btn btn-success w-100 {{ $sale->status === 'COMPLETED' ? 'disable' : '' }}">
+            Checkout
+            </button>
+
+        <script>
+            const paymentSelect = document.getElementById('payment_method');
+            const uangWrapper = document.getElementById('uang-dibayar-wrapper');
+            const uangInput = document.getElementById('uang_dibayar');
+
+            function toggleUangDibayar() {
+                if (paymentSelect.value === 'CASH') {
+                    uangWrapper.style.display = 'block';
+                    uangInput.setAttribute('required', 'required');
+                } else {
+                    uangWrapper.style.display = 'none';
+                    uangInput.removeAttribute('required');
+                    uangInput.value = '';
+                }
+            }
+
+            paymentSelect.addEventListener('change', toggleUangDibayar);
+            toggleUangDibayar();
+        </script>
             </form>
             @can('delete', $sale)
             <form method="POST"

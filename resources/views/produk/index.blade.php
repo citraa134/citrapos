@@ -279,7 +279,7 @@
           name="search"
           value=""
           class="form-control"
-          placeholder="Search nama produk"
+          placeholder="Search nama produk dan nama jenis"
       >
       <button class="btn btn-outline-secondary" type="submit">
         Search 
@@ -321,19 +321,21 @@
               {{ $product->stok }}
             </span>
           </td>
-          <td class="d-flex gap-1">
-            @can('update', $product)
-              <a href="{{ route('produk.edit', $product) }}" class="btn btn-warning">Edit</a>
-            @endcan
-            @can('delete', $product)
-              <form action="{{ route('produk.destroy', $product) }}" method="POST" class="d-inline">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus produk ini?')">
-                      Hapus
-                    </button>
-                  </form>
-            @endcan
+          <td>
+            <div class="d-flex gap-1">
+              @can('update', $product)
+                <a href="{{ route('produk.edit', $product) }}" class="btn btn-warning">Edit</a>
+              @endcan
+              @can('delete', $product)
+                <form action="{{ route('produk.destroy', $product) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus produk ini?')">
+                        Hapus
+                      </button>
+                    </form>
+              @endcan
+            </div>
           </td>
         </tr>
         @empty

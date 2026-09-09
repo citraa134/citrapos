@@ -325,7 +325,7 @@
             </span>
               </td>
               <td class="d-flex gap-1">
-                <a href="" class="btn btn-sm btn-info" onclick="event.preventDefault(); showDetailPenjualan('{{ $sale->status }}')">Detail</a>
+                <button type="button" class="btn btn-sm btn-info" onclick="showStruk({{ $sale->id }})">Detail</button>
                 @can('view', $sale)
                 <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-sm btn-warning">Edit</a>
                 @endcan
@@ -340,6 +340,29 @@
           @endcan
               </td>
                 </tr>
+
+                <div id="struk-{{ $sale->id }}" style="display:none;">
+                    <div style="font-family:'Courier New',monospace;">
+                        <h5 class="text-center mb-0">POS CITRA</h5>
+                        <p class="text-center text-muted small mb-2">{{ $sale->created_at->format('d-m-Y H:i:s') }}</p>
+                        <hr>
+                        <p class="mb-1"><strong>No. Transaksi:</strong> #{{ $sale->id }}</p>
+                        <p class="mb-2"><strong>Kasir:</strong> {{ $sale->user->name }}</p>
+                        <hr>
+                        @foreach ($sale->itemPenjualan as $item)
+                            <div class="d-flex justify-content-between small">
+                                <span>{{ $item->produk->nama }} x{{ $item->kuantitas }}</span>
+                                <span>Rp {{ number_format($item->subtotal) }}</span>
+                            </div>
+                        @endforeach
+                        <hr>
+                        <div class="d-flex justify-content-between"><strong>Total</strong><strong>Rp {{ number_format($sale->total_pembayaran) }}</strong></div>
+                        <div class="d-flex justify-content-between"><span>Metode</span><span>{{ $sale->metode_pembayaran }}</span></div>
+                        <div class="d-flex justify-content-between"><span>Dibayar</span><span>Rp {{ number_format($sale->uang_dibayar) }}</span></div>
+                        <div class="d-flex justify-content-between"><span>Kembalian</span><span>Rp {{ number_format($sale->uang_dibayar - $sale->total_pembayaran) }}</span></div>
+                    </div>
+                </div>
+
                 @empty
                 <tr>
                     <td colspan="7" class="empty-state">Data Tidak Ditemukan</td>
@@ -355,19 +378,25 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-function showDetailPenjualan(status) {
-    const s = status.toLowerCase();
-    const isSelesai = s === 'lunas' || s === 'completed';
+<div class="modal fade" id="modalStruk" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detail Transaksi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="strukContent"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    Swal.fire({
-        icon: isSelesai ? 'success' : 'warning',
-        title: isSelesai
-            ? 'Transaksi telah berhasil'
-            : 'Transaksi belum selesai (' + status + ')',
-        confirmButtonText: 'Tutup'
-    });
+<script>
+function showStruk(id) {
+    document.getElementById('strukContent').innerHTML = document.getElementById('struk-' + id).innerHTML;
+    new bootstrap.Modal(document.getElementById('modalStruk')).show();
 }
 </script>
 

@@ -22,16 +22,16 @@ class ProdukController extends Controller
 
         $keyword = $request->input('search');
 
-        if($keyword) {
-            $products = Produk::when($keyword, function ($query) use ($keyword) {
-                $query->where('nama', 'like', '%' . $keyword . '%');
+        $products = Produk::when($keyword, function ($query) use ($keyword) {
+                $query->where('nama', 'like', '%' . $keyword . '%')
+                      ->orWhereHas('jenis', function ($q) use ($keyword) {
+                          $q->where('nama', 'like', '%' . $keyword . '%');
+                      });
             })
-            ->orderBy('nama')
+            ->latest()
             ->paginate(10)
             ->withQueryString();
-        } else {
-            $products = Produk::latest()->paginate(10)->withQueryString();
-        }
+
         return view('produk.index', compact('products'));
     }
 

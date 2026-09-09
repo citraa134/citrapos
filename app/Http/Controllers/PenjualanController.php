@@ -20,20 +20,20 @@ class PenjualanController extends Controller
         $keyword = $request->input('search');
 
         $sales = Penjualan::query()
+        ->with('itemPenjualan.produk')
 
-           ->when($user->role->name === 'kasir', function ($query) use ($user) {
+        ->when($user->role->name === 'kasir', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
-           })
+    })
+        ->when($keyword, function ($query) use ($keyword) {
+            $query->whereHas('user', function ($q) use ($keyword) {
+                $q->where('name', 'like', '%' . $keyword . '%');
+            });
+        })
 
-            ->when($keyword, function ($query) use ($keyword) {
-                $query->whereHas('user', function ($q) use ($keyword) {
-                    $q->where('name', 'like', '%' . $keyword . '%');
-                });
-            })
-
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+    ->latest()
+    ->paginate(10)
+    ->withQueryString();
 
          return view('penjualan.index', compact('sales'));
     }
@@ -82,9 +82,13 @@ class PenjualanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Penjualan $penjualan)
     {
-        //
+        $penjualan->load(['itemPenjualan.produk', 'user']);
+
+        $kembalian = $penjualan->uang_dibayar - $penjualan->total_pembayaran;
+
+        return view('penjualan.show', compact('penjualan', 'kembalian'));
     }
 
     /**
@@ -109,7 +113,8 @@ class PenjualanController extends Controller
     public function update(Request $request, Penjualan $penjualan)
     {
         $request->validate([
-            'payment_method' => 'required|in:CASH,QRIS'
+            'payment_method' => 'required|in:CASH,QRIS',
+            'uang_dibayar'   => 'required_if:payment_method,CASH|nullable|integer|min:0',
         ]);
 
         if ($penjualan->status !== 'OPEN') {
@@ -120,14 +125,20 @@ class PenjualanController extends Controller
             return back()->with('errors', 'Keranjang masih kosong');
         }
 
-        DB::transaction(function () use ($penjualan, $request) {
+        $total = $penjualan->itemPenjualan()->sum('subtotal');
 
-            $total = $penjualan->itemPenjualan()->sum('subtotal');
+        if ($request->payment_method === 'CASH' && $request->uang_dibayar < $total) {
+            return back()
+                ->withErrors(['uang_dibayar' => 'Uang yang dibayar kurang dari total belanja'])
+                ->withInput();
+        }
 
+        DB::transaction(function () use ($penjualan, $request, $total) {
             $penjualan->update([
                 'metode_pembayaran' => $request->payment_method,
                 'total_pembayaran'  => $total,
-                'status'            =>'COMPLETED'
+                'uang_dibayar'      => $request->payment_method === 'CASH' ? $request->uang_dibayar : $total,
+                'status'            => 'COMPLETED'
             ]);
         });
 
