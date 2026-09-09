@@ -237,40 +237,26 @@
                   onsubmit="return confirm('Yakin ingin checkout?')" class="mt-2">
               @csrf
               @method('PUT')
-            <select name="payment_method" id="payment_method" class="form-select mb-2" required>
-            <option value="" disabled selected>Pilih Pembayaran</option>
-            <option value="CASH">Cash</option>
-            <option value="QRIS">QRIS</option>
-            </select>
 
-            <div id="uang-dibayar-wrapper" class="mb-2" style="display:none;">
-                <input type="number" name="uang_dibayar" id="uang_dibayar" class="form-control"
-                    placeholder="Uang dibayar customer" min="0">
-            </div>
+              <select name="payment_method" id="payment_method" class="form-select mb-2" required>
+                <option value="" disabled selected>Pilih Pembayaran</option>
+                <option value="CASH">Cash</option>
+                <option value="QRIS">QRIS</option>
+              </select>
 
-            <button class="btn btn-success w-100 {{ $sale->status === 'COMPLETED' ? 'disable' : '' }}">
-            Checkout
-            </button>
+              <div id="uang-dibayar-wrapper" class="mb-2" style="display:none;">
+                  <input type="number" name="uang_dibayar" id="uang_dibayar" class="form-control"
+                         placeholder="Uang dibayar customer" min="0">
+              </div>
 
-        <script>
-            const paymentSelect = document.getElementById('payment_method');
-            const uangWrapper = document.getElementById('uang-dibayar-wrapper');
-            const uangInput = document.getElementById('uang_dibayar');
+              <div id="qris-wrapper" class="mb-2 text-center" style="display:none;">
+                  <img src="{{ asset('images/qris-dummy.png') }}" alt="QRIS" style="width:180px;">
+                  <p class="small text-muted mb-0">Scan QR di atas untuk membayar</p>
+              </div>
 
-            function toggleUangDibayar() {
-                if (paymentSelect.value === 'CASH') {
-                    uangWrapper.style.display = 'block';
-                    uangInput.setAttribute('required', 'required');
-                } else {
-                    uangWrapper.style.display = 'none';
-                    uangInput.removeAttribute('required');
-                    uangInput.value = '';
-                }
-            }
-
-            paymentSelect.addEventListener('change', toggleUangDibayar);
-            toggleUangDibayar();
-        </script>
+              <button class="btn btn-success w-100 {{ $sale->status === 'COMPLETED' ? 'disable' : '' }}">
+                 Checkout
+              </button>
             </form>
             @can('delete', $sale)
             <form method="POST"
@@ -290,4 +276,31 @@
 </div>
 
 </div>
+
+<script>
+    const paymentSelect = document.getElementById('payment_method');
+    const uangWrapper = document.getElementById('uang-dibayar-wrapper');
+    const uangInput = document.getElementById('uang_dibayar');
+    const qrisWrapper = document.getElementById('qris-wrapper');
+
+    function toggleUangDibayar() {
+        if (paymentSelect.value === 'CASH') {
+            uangWrapper.style.display = 'block';
+            uangInput.setAttribute('required', 'required');
+            qrisWrapper.style.display = 'none';
+        } else if (paymentSelect.value === 'QRIS') {
+            uangWrapper.style.display = 'none';
+            uangInput.removeAttribute('required');
+            uangInput.value = '';
+            qrisWrapper.style.display = 'block';
+        } else {
+            uangWrapper.style.display = 'none';
+            qrisWrapper.style.display = 'none';
+            uangInput.removeAttribute('required');
+        }
+    }
+
+    paymentSelect.addEventListener('change', toggleUangDibayar);
+    toggleUangDibayar();
+</script>
 @endsection
