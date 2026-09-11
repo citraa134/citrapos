@@ -104,10 +104,54 @@
         color: #4c1d95;
     }
 
-    .content-wrapper-soft .card-footer {
+        .content-wrapper-soft .card-footer {
         background: #faf9ff;
         border-top: 1px solid #f1eafe;
     }
+
+    #modalConfirmCheckout .btn-primary {
+        background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+        border: none;
+        border-radius: 10px;
+    }
+
+    #modalConfirmCheckout .btn-primary:hover {
+        opacity: 0.9;
+    }
+
+    #modalConfirmCheckout .btn-outline-primary {
+        border-radius: 10px;
+        border-color: #ddd6fe;
+        color: #6d28d9;
+    }
+
+    #modalConfirmCheckout .btn-outline-primary:hover {
+        background: #f3e8ff;
+        border-color: #a78bfa;
+        color: #4c1d95;
+    }
+
+    #modalConfirmDelete .btn-outline-primary {
+    border-radius: 10px;
+    border-color: #ddd6fe;
+    color: #6d28d9;
+}
+
+#modalConfirmDelete .btn-outline-primary:hover {
+    background: #f3e8ff;
+    border-color: #a78bfa;
+    color: #4c1d95;
+}
+
+#modalConfirmDelete .btn-primary {
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    border: none;
+    border-radius: 10px;
+}
+
+#modalConfirmDelete .btn-primary:hover {
+    opacity: 0.9;
+}
 </style>
 
 <div class="page-bg-full"></div>
@@ -233,8 +277,8 @@
             <strong>Rp {{ number_format($sale->total_pembayaran) }}</strong>
 
             <form method="POST" 
-                  action="{{ route('penjualan.update', $sale->id) }}" 
-                  onsubmit="return confirm('Yakin ingin checkout?')" class="mt-2">
+                  id="checkoutForm"
+                  action="{{ route('penjualan.update', $sale->id) }}" class="mt-2">
               @csrf
               @method('PUT')
 
@@ -254,17 +298,16 @@
                   <p class="small text-muted mb-0">Scan QR di atas untuk membayar</p>
               </div>
 
-              <button class="btn btn-success w-100 {{ $sale->status === 'COMPLETED' ? 'disable' : '' }}">
+              <button type="button" onclick="confirmCheckout()" class="btn btn-success w-100 {{ $sale->status === 'COMPLETED' ? 'disable' : '' }}">
                  Checkout
               </button>
             </form>
             @can('delete', $sale)
-            <form method="POST"
-                  action="{{ route('penjualan.destroy', $sale->id) }}"
-                  onsubmit="return confirm('Yakin ingin membatalkan transaksi?')">
+            <form method="POST" id="batalTransaksiForm"
+                  action="{{ route('penjualan.destroy', $sale->id) }}">
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-outline-danger w-100 mt-2 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
+                  <button type="button" onclick="confirmDelete('batalTransaksiForm', 'Transaksi ini akan dibatalkan dan tidak bisa dikembalikan.')" class="btn btn-outline-danger w-100 mt-2 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
                       Batal Transaksi
                   </button>
             </form>
@@ -275,6 +318,44 @@
 
 </div>
 
+</div>
+
+<div class="modal fade" id="modalConfirmCheckout" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 16px; border: none;">
+      <div class="modal-body text-center py-4">
+        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+             style="width:56px;height:56px;border-radius:50%;background:#f3e8ff;">
+          <span style="font-size:1.5rem;">🛒</span>
+        </div>
+        <h5 class="fw-bold mb-2" style="color:#4c1d95;">Yakin ingin checkout?</h5>
+        <p class="text-muted small mb-4">Transaksi akan diselesaikan dan tidak bisa diedit lagi setelah ini.</p>
+        <div class="d-flex gap-2 justify-content-center">
+          <button type="button" class="btn btn-outline-primary px-4" data-bs-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-primary px-4" onclick="document.getElementById('checkoutForm').submit()">Ya, Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 16px; border: none;">
+      <div class="modal-body text-center py-4">
+        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+             style="width:56px;height:56px;border-radius:50%;background:#f3e8ff;">
+          <span style="font-size:1.5rem;">🗑️</span>
+        </div>
+        <h5 class="fw-bold mb-2" style="color:#4c1d95;">Yakin ingin menghapus?</h5>
+        <p class="text-muted small mb-4" id="deleteMessage">Data ini akan dihapus secara permanen.</p>
+        <div class="d-flex gap-2 justify-content-center">
+          <button type="button" class="btn btn-outline-primary px-4" data-bs-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-primary px-4" id="btnConfirmDelete">Ya, Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -302,5 +383,23 @@
 
     paymentSelect.addEventListener('change', toggleUangDibayar);
     toggleUangDibayar();
+
+    function confirmCheckout() {
+        const form = document.getElementById('checkoutForm');
+        if (!form.reportValidity()) {
+            return;
+        }
+        new bootstrap.Modal(document.getElementById('modalConfirmCheckout')).show();
+    }
+
+    let formToDelete = null;
+    function confirmDelete(formId, message) {
+        formToDelete = document.getElementById(formId);
+        document.getElementById('deleteMessage').textContent = message || 'Data ini akan dihapus secara permanen.';
+        new bootstrap.Modal(document.getElementById('modalConfirmDelete')).show();
+    }
+    document.getElementById('btnConfirmDelete').addEventListener('click', function () {
+        if (formToDelete) formToDelete.submit();
+    });
 </script>
 @endsection
