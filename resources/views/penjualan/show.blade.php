@@ -55,7 +55,7 @@
 @include('layouts.navbar')
 
 <div class="receipt-wrapper">
-    <h4>POS CITRA</h4>
+    <h4>Aera Boutique</h4>
     <div class="receipt-subtitle">
         {{ $penjualan->created_at->format('d-m-Y H:i:s') }}
     </div>

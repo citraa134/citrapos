@@ -267,6 +267,29 @@
     border-color: #A9B2F0;
     color: #FFFFFF;
   }
+
+  /* ---- Modal Hapus (ungu) ---- */
+  #modalConfirmDelete .btn-primary {
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    border: none;
+    border-radius: 10px;
+  }
+
+  #modalConfirmDelete .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  #modalConfirmDelete .btn-outline-primary {
+    border-radius: 10px;
+    border-color: #ddd6fe;
+    color: #6d28d9;
+  }
+
+  #modalConfirmDelete .btn-outline-primary:hover {
+    background: #f3e8ff;
+    border-color: #a78bfa;
+    color: #4c1d95;
+  }
 </style>
 
 @include('layouts.navbar')
@@ -330,10 +353,10 @@
                 <a href="{{ route('penjualan.edit', $sale) }}" class="btn btn-sm btn-warning">Edit</a>
                 @endcan
                 @can('delete', $sale)
-        <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline">
+        <form action="{{ route('penjualan.destroy', $sale) }}" method="POST" class="d-inline" id="deleteForm-{{ $sale->id }}">
           @csrf
           @method('DELETE')
-          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin akan menghapus penjualan ini?')">
+          <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('deleteForm-{{ $sale->id }}', 'Transaksi penjualan #{{ $sale->id }} akan dihapus secara permanen.')">
               Hapus
           </button>
         </form>
@@ -393,11 +416,40 @@
   </div>
 </div>
 
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 16px; border: none;">
+      <div class="modal-body text-center py-4">
+        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+             style="width:56px;height:56px;border-radius:50%;background:#f3e8ff;">
+          <span style="font-size:1.5rem;">🗑️</span>
+        </div>
+        <h5 class="fw-bold mb-2" style="color:#4c1d95;">Yakin ingin menghapus?</h5>
+        <p class="text-muted small mb-4" id="deleteMessage">Data ini akan dihapus secara permanen.</p>
+        <div class="d-flex gap-2 justify-content-center">
+          <button type="button" class="btn btn-outline-primary px-4" data-bs-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-primary px-4" id="btnConfirmDelete">Ya, Hapus</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 function showStruk(id) {
     document.getElementById('strukContent').innerHTML = document.getElementById('struk-' + id).innerHTML;
     new bootstrap.Modal(document.getElementById('modalStruk')).show();
 }
+
+let formToDelete = null;
+function confirmDelete(formId, message) {
+    formToDelete = document.getElementById(formId);
+    document.getElementById('deleteMessage').textContent = message || 'Data ini akan dihapus secara permanen.';
+    new bootstrap.Modal(document.getElementById('modalConfirmDelete')).show();
+}
+document.getElementById('btnConfirmDelete').addEventListener('click', function () {
+    if (formToDelete) formToDelete.submit();
+});
 </script>
 
 @endsection
