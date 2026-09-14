@@ -28,6 +28,9 @@
         <li class="nav-item">
           <a class="nav-link {{ Request::is('penjualan') ? 'active' : '' }}" href="{{ route('penjualan.index') }}">Penjualan</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="{{ route('about') }}">About</a>
+        </li>
       </ul>
 
       <form class="d-flex mb-2 mb-lg-0" action="{{ route('logout') }}" method="POST">
