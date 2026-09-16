@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About')
+@section('title', 'Tentang')
 
 @section('content')
 
@@ -125,7 +125,11 @@
             <h5>Aera Boutique</h5>
             <p>
                 Aera Boutique adalah toko fashion yang menyediakan berbagai pilihan
-                atasan, bawahan, dan sepatu untuk kebutuhan gaya sehari-hari.
+                atasan, bawahan, dan sepatu untuk kebutuhan gaya sehari-hari. Berdiri
+                dengan tujuan menghadirkan pakaian yang nyaman dipakai namun tetap
+                mengikuti tren terkini, Aera Boutique berusaha menjadi pilihan utama
+                bagi siapa saja yang ingin tampil percaya diri tanpa mengorbankan
+                kenyamanan.
             </p>
 
             <h5>Fitur Aplikasi</h5>
