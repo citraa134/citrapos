@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               8.4.3 - MySQL Community Server - GPL
+-- Server version:               8.0.30 - MySQL Community Server - GPL
 -- Server OS:                    Win64
 -- HeidiSQL Version:             12.8.0.6908
 -- --------------------------------------------------------
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `item_penjualan` (
   KEY `item_penjualan_produk_id_foreign` (`produk_id`),
   CONSTRAINT `item_penjualan_penjualan_id_foreign` FOREIGN KEY (`penjualan_id`) REFERENCES `penjualan` (`id`),
   CONSTRAINT `item_penjualan_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table pos_citra.item_penjualan: ~6 rows (approximately)
 INSERT INTO `item_penjualan` (`id`, `penjualan_id`, `produk_id`, `kuantitas`, `harga_satuan`, `subtotal`, `created_at`, `updated_at`) VALUES
@@ -84,7 +84,9 @@ INSERT INTO `item_penjualan` (`id`, `penjualan_id`, `produk_id`, `kuantitas`, `h
 	(11, 10, 11, 1, 75000, 75000, '2026-09-13 20:03:29', '2026-09-13 20:03:29'),
 	(12, 10, 6, 1, 110000, 110000, '2026-09-13 20:03:32', '2026-09-13 20:03:32'),
 	(14, 12, 14, 1, 100000, 100000, '2026-09-15 19:58:48', '2026-09-15 19:58:48'),
-	(15, 12, 12, 1, 75000, 75000, '2026-09-15 19:58:54', '2026-09-15 19:58:54');
+	(15, 12, 12, 1, 75000, 75000, '2026-09-15 19:58:54', '2026-09-15 19:58:54'),
+	(16, 13, 13, 1, 85000, 85000, '2026-09-15 20:32:00', '2026-09-15 20:32:00'),
+	(17, 13, 3, 1, 90000, 90000, '2026-09-15 20:32:04', '2026-09-15 20:32:04');
 
 -- Dumping structure for table pos_citra.jenis
 CREATE TABLE IF NOT EXISTS `jenis` (
@@ -167,16 +169,17 @@ CREATE TABLE IF NOT EXISTS `penjualan` (
   PRIMARY KEY (`id`),
   KEY `penjualan_user_id_foreign` (`user_id`),
   CONSTRAINT `penjualan_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.penjualan: ~6 rows (approximately)
+-- Dumping data for table pos_citra.penjualan: ~7 rows (approximately)
 INSERT INTO `penjualan` (`id`, `user_id`, `total_pembayaran`, `metode_pembayaran`, `uang_dibayar`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 6, 255000, 'QRIS', NULL, 'COMPLETED', '2026-09-01 23:17:24', '2026-09-01 23:28:54'),
 	(4, 6, 185000, 'CASH', 200000, 'COMPLETED', '2026-09-08 19:49:30', '2026-09-08 19:50:22'),
 	(5, 6, 215000, 'CASH', 215000, 'COMPLETED', '2026-09-08 20:50:02', '2026-09-08 20:51:00'),
 	(8, 6, 95000, 'CASH', 100000, 'COMPLETED', '2026-09-10 20:00:57', '2026-09-10 21:13:18'),
 	(10, 6, 185000, 'CASH', 200000, 'COMPLETED', '2026-09-13 20:03:26', '2026-09-13 20:03:52'),
-	(12, 6, 175000, 'QRIS', 175000, 'COMPLETED', '2026-09-15 19:22:44', '2026-09-15 19:59:02');
+	(12, 6, 175000, 'QRIS', 175000, 'COMPLETED', '2026-09-15 19:22:44', '2026-09-15 19:59:02'),
+	(13, 7, 175000, 'CASH', 180000, 'COMPLETED', '2026-09-15 20:31:56', '2026-09-15 20:32:30');
 
 -- Dumping structure for table pos_citra.produk
 CREATE TABLE IF NOT EXISTS `produk` (
@@ -198,11 +201,11 @@ CREATE TABLE IF NOT EXISTS `produk` (
   CONSTRAINT `produk_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.produk: ~13 rows (approximately)
+-- Dumping data for table pos_citra.produk: ~0 rows (approximately)
 INSERT INTO `produk` (`id`, `user_id`, `jenis_id`, `foto`, `nama`, `harga_beli`, `harga_jual`, `stok`, `created_at`, `updated_at`) VALUES
 	(1, 6, 5, 'products/EMtqHEKbwo1gmNDWVPRhMAgtJEyMgDSi8PZBRznc.jpg', 'Navy Button-Up & Baggy Jeans', 100000, 150000, 49, '2026-09-01 23:02:43', '2026-09-08 20:50:34'),
 	(2, 6, 4, 'products/pW8QaEuzN973jmOoqUxz7AfKh2mkJYHKbYRUY5wv.jpg', 'crochet sweater', 50000, 70000, 50, '2026-09-01 23:07:53', '2026-09-01 23:07:53'),
-	(3, 6, 5, 'products/LosmeUab2uHY38cJaauSaobkuieXSupN0FjWW4Qj.jpg', 'Blue Abaya', 70000, 90000, 59, '2026-09-01 23:09:11', '2026-09-08 19:49:57'),
+	(3, 6, 5, 'products/LosmeUab2uHY38cJaauSaobkuieXSupN0FjWW4Qj.jpg', 'Blue Abaya', 70000, 90000, 58, '2026-09-01 23:09:11', '2026-09-15 20:32:04'),
 	(5, 6, 4, 'products/qps3ISwvjfavxLQkJetQANxO8UGCOTXtVlslNdrY.png', 'Crop top', 30000, 45000, 50, '2026-09-01 23:15:20', '2026-09-06 21:56:46'),
 	(6, 6, 6, 'products/lfpJyUk0jphg55EJqTwbNeSnhgqm8whEi2Jtud8O.png', 'Jeans', 98000, 110000, 73, '2026-09-01 23:17:17', '2026-09-13 20:03:32'),
 	(7, 6, 6, 'products/WAfQSK2ILnE8k5sChV0bo08wxaKcUtnfFP24UqN9.jpg', 'Cargo', 80000, 95000, 52, '2026-09-01 23:18:06', '2026-09-10 20:02:56'),
@@ -211,7 +214,7 @@ INSERT INTO `produk` (`id`, `user_id`, `jenis_id`, `foto`, `nama`, `harga_beli`,
 	(10, 6, 5, 'products/YBM0Z5cxQScs6SclNJAPTAE9D3hWOCE4LpkTZZrn.jpg', 'Long frock', 60000, 80000, 87, '2026-09-01 23:28:20', '2026-09-01 23:28:48'),
 	(11, 6, 7, 'products/pa21BfxgalYiXMaJK5Labxc4GyPUXz03dWSkTcEB.jpg', 'chunky Mary Jane', 60000, 75000, 54, '2026-09-08 21:04:35', '2026-09-13 20:03:29'),
 	(12, 6, 7, 'products/Yi5LEQlvugqkKWTC6JK9xYZ32dXsX1VsamuhKURT.jpg', 'low heel', 60000, 75000, 59, '2026-09-08 21:05:31', '2026-09-15 19:58:54'),
-	(13, 6, 7, 'products/gGOjCeeWkfKUkB1KKflWAGJQsMzS51uYEqtw4MQz.jpg', 'Mary Jane Puma coklat', 60000, 85000, 45, '2026-09-08 21:11:28', '2026-09-08 21:11:28'),
+	(13, 6, 7, 'products/gGOjCeeWkfKUkB1KKflWAGJQsMzS51uYEqtw4MQz.jpg', 'Mary Jane Puma coklat', 60000, 85000, 44, '2026-09-08 21:11:28', '2026-09-15 20:32:00'),
 	(14, 6, 7, 'products/74a1jO93vBTaGV5MKfCEyFtq6u8J3qahT3aPXgJk.jpg', 'platform ankle boots', 85000, 100000, 66, '2026-09-08 21:12:34', '2026-09-15 19:58:48');
 
 -- Dumping structure for table pos_citra.roles
@@ -223,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.roles: ~2 rows (approximately)
+-- Dumping data for table pos_citra.roles: ~0 rows (approximately)
 INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 	(1, 'admin', '2026-09-01 19:59:59', '2026-09-01 19:59:59'),
 	(2, 'kasir', '2026-09-01 19:59:59', '2026-09-01 19:59:59');
@@ -241,8 +244,9 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table pos_citra.sessions: ~1 rows (approximately)
+-- Dumping data for table pos_citra.sessions: ~0 rows (approximately)
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+	('DvC344m19alxZni59GKcfc7macKG0PBihHVLswix', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiT25hSVNTM2xmaDI2ZjJhUUVaVDFJQVV3RUxySjVQak9XVVdNcmYwNiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWsiO3M6NToicm91dGUiO3M6MTI6InByb2R1ay5pbmRleCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY7fQ==', 1789529612),
 	('xj1ajVTZBgSTWmk1PMdX5cx6qKNt2oBIJDFEI0kR', 6, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQ0hENFY5VUtJZXJyTWEwUTFVY1F1U1lNcWdoUTE1NHN4ZGpQbUpPWCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6OToiZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njt9', 1789527721);
 
 -- Dumping structure for table pos_citra.users

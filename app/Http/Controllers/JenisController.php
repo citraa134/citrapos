@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 
 class JenisController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jenis = Jenis::latest()->get();
-        return view('jenis.index', compact('jenis'));
+        // Tangkap input kata kunci pencarian dari form
+        $search = $request->input('search');
+
+        // Lakukan pencarian jika ada input, lalu urutkan berdasarkan yang terbaru
+        $jenis = Jenis::when($search, function ($query, $search) {
+            return $query->where('nama', 'LIKE', '%' . $search . '%');
+        })
+        ->latest()
+        ->get();
+
+        // Kirim data jenis beserta teks pencarian kembali ke view
+        return view('jenis.index', compact('jenis', 'search'));
     }
 
     public function create()
